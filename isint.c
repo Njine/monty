@@ -8,15 +8,14 @@
  */
 int is_int(char *str)
 {
-	int x = 0;
-
-	if (!str || *str == '\0')
+	if (str == NULL || *str == '\0')
 		return (0);
 
-	if (str[0] == '-')
+	int x = 0;
+	if (str[x] == '-' || str[x] == '+')
 		x++;
 
-	while (str[x])
+	while (str[x] != '\0')
 	{
 		if (!isdigit(str[x]))
 			return (0);

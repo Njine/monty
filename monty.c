@@ -9,12 +9,12 @@ int SQ = 1;
  */
 int main(int argc, char **argv)
 {
-	FILE *infile;
+	FILE *file_in;
 	unsigned int line_number = 0;
-	char *stari = NULL;
-	stack_t *ju = NULL;
-	instruction_t *cmd = NULL;
-	size_t sizeg = 0;
+	char *line = NULL;
+	stack_t *top = NULL;
+	instruction_t *instruction = NULL;
+	size_t glsize = 0;
 
 	/* check for proper number of arguments */
 	if (argc != 2)
@@ -24,53 +24,53 @@ int main(int argc, char **argv)
 	}
 
 	/* open file */
-	infile = fopen(argv[1], "r");
-	if (infile == NULL)
+	file_in = fopen(argv[1], "r");
+	if (file_in == NULL)
 	{
 		fprintf(stdout, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
 
 	/* parse file */
-	while (getline(&stari, &sizeg, infile) != -1)
+	while (getline(&line, &glsize, file_in) != -1)
 	{
 		line_number++;
-		cmd = parse_line(stari);
+		instruction = parse_line(line);
 
-		if (!(cmd->opcode) || cmd->opcode[0] == '#')
+		if (!(instruction->opcode) || instruction->opcode[0] == '#')
 		{
-			free(cmd);
-			if (stari)
-				free(stari);
-			stari = NULL;
+			free(instruction);
+			if (line)
+				free(line);
+			line = NULL;
 			continue;
 		}
 
-		if (cmd->f)
-			cmd->f(&ju, line_number);
+		if (instruction->f)
+			instruction->f(&top, line_number);
 		else
 		{
-			fprintf(stdout, "L%d: unknown cmd %s\n",
-				line_number, cmd->opcode);
-			if (stari)
-				free(stari);
-			if (ju)
-				free_stack(ju);
-			free(cmd);
-			fclose(infile);
+			fprintf(stdout, "L%d: unknown instruction %s\n",
+				line_number, instruction->opcode);
+			if (line)
+				free(line);
+			if (top)
+				free_stack(top);
+			free(instruction);
+			fclose(file_in);
 			exit(EXIT_FAILURE);
 		}
 
-		if (stari)
-			free(stari);
-		stari = NULL;
-		free(cmd);
+		if (line)
+			free(line);
+		line = NULL;
+		free(instruction);
 	}
 
-	if (stari)
-		free(stari);
-	free_stack(ju);
-	fclose(infile);
+	if (line)
+		free(line);
+	free_stack(top);
+	fclose(file_in);
 	return (0);
 
 }

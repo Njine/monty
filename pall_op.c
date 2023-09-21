@@ -9,10 +9,15 @@
  */
 void pall(stack_t **stack, unsigned int line_number)
 {
-	stack_t *tmp = *stack;
+	stack_t *tmp;
 
 	UNUSED(line_number);
 
-	for (; tmp != NULL; tmp = tmp->next)
+	tmp = *stack;
+	while (tmp != NULL)
+	{
 		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+	}
+
 }
