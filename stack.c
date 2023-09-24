@@ -1,6 +1,6 @@
 #include "monty.h"
 /**
- * f_pop - top printer
+ * f_stack - top printer
  * @head: haed stack pointer
  * @counter: line no
  * Return: no return value
