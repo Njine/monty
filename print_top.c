@@ -1,11 +1,10 @@
 #include "monty.h"
-
 /**
- * f_pint - Prints the top element of the stack.
- * @head: Pointer to the head of the stack.
- * @counter: Line number.
- * Return: No return value.
- */
+ * f_pint - It prints the top
+ * @head:Pointer to the head of stack.
+ * @counter: line number
+ * Return: no return value
+*/
 void f_pint(stack_t **head, unsigned int counter)
 {
 	if (*head == NULL)
@@ -16,7 +15,5 @@ void f_pint(stack_t **head, unsigned int counter)
 		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-
 	printf("%d\n", (*head)->n);
 }
-
