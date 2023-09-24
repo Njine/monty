@@ -20,13 +20,14 @@ int execute(char *content, stack_t **stack, unsigned int counter, FILE *file)
         {"queue", f_queue}, {"stack", f_stack}, {NULL, NULL}
     };
     char *op = strtok(content, " \n\t");
+    unsigned int i;
 
     if (op && op[0] == '#')
         return (0);
 
     bus.arg = strtok(NULL, " \n\t");
 
-    for (unsigned int i = 0; opst[i].opcode; i++)
+    for (i = 0; opst[i].opcode; i++)
     {
         if (op && strcmp(op, opst[i].opcode) == 0)
         {
